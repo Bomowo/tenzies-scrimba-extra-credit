@@ -7,6 +7,7 @@ body {
     background-color: #0B2434;
     padding: 20px;
     font-family: 'Karla', sans-serif;
+    
 }
 
 main {
@@ -49,10 +50,38 @@ main {
     justify-content: center;
     align-items: center;
     cursor: pointer;
+
 }
 
-.die-num {
-    font-size: 2rem;
+.die1 {
+    background: url('./content/dice-1-svgrepo-com.svg') no-repeat;
+    background-size: cover;
+    background-position: center center; 
+}
+.die2 {
+    background: url('./content/dice-2-svgrepo-com.svg') no-repeat;
+    background-size: cover;
+    background-position: center center; 
+}
+.die3 {
+    background: url('./content/dice-3-svgrepo-com.svg') no-repeat;
+    background-size: cover;
+    background-position: center center; 
+}
+.die4 {
+    background: url('./content/dice-4-svgrepo-com.svg') no-repeat;
+    background-size: cover;
+    background-position: center center; 
+}
+.die5 {
+    background: url('./content/dice-5-svgrepo-com.svg') no-repeat;
+    background-size: cover;
+    background-position: center center; 
+}
+.die6 {
+    background: url('./content/dice-6-svgrepo-com.svg') no-repeat;
+    background-size: cover;
+    background-position: center center; 
 }
 
 .roll-dice {
