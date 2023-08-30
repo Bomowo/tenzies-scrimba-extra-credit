@@ -36,6 +36,7 @@ export default function App() {
             setConfettiToggle(true)
 
         }
+    // eslint-disable-next-line 
     }, [dice, bestScore])
 
 
