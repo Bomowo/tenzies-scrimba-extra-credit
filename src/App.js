@@ -2,12 +2,15 @@ import React from "react"
 import Die from "./Die"
 import {nanoid} from "nanoid"
 import Confetti from "react-confetti"
+import Timer from "./Timer"
 
 export default function App() {
 
     const [dice, setDice] = React.useState(allNewDice())
-    const [tenzies, setTenzies] = React.useState(false)
+    const [tenzies, setTenzies] = React.useState(true)
     const [numOfPlayes, setNumOfPlayes] = React.useState(0);
+    const [playTime, setPlayTime] = React.useState(0)
+    const [confettiToggle, setConfettiToggle] = React.useState(false)
     
     React.useEffect(() => {
         const allHeld = dice.every(die => die.isHeld)
@@ -15,8 +18,20 @@ export default function App() {
         const allSameValue = dice.every(die => die.value === firstValue)
         if (allHeld && allSameValue) {
             setTenzies(true)
+            setConfettiToggle(true)
         }
     }, [dice])
+
+    React.useEffect(() => {
+        let intervalId
+
+        if(!tenzies){
+            intervalId = setInterval(() => setPlayTime(playTime + 1), 1000)
+        }
+
+        return () => clearInterval(intervalId)
+
+    }, [tenzies, playTime])
 
     function generateNewDie() {
         return {
@@ -44,8 +59,10 @@ export default function App() {
             setNumOfPlayes(prevNum => prevNum + 1)
         } else {
             setTenzies(false)
+            setConfettiToggle(false)
             setDice(allNewDice())
             setNumOfPlayes(0)
+            setPlayTime(0)
         }
     }
     
@@ -68,7 +85,7 @@ export default function App() {
     
     return (
         <main>
-            {tenzies && <Confetti />}
+            {confettiToggle && <Confetti />}
             <h1 className="title">Tenzies</h1>
             <p className="instructions">Roll until all dice are the same. 
             Click each die to freeze it at its current value between rolls.</p>
@@ -82,6 +99,7 @@ export default function App() {
                 {tenzies ? "New Game" : "Roll"}
             </button>
             <p>Number of playes: {numOfPlayes}</p>
+            <Timer timeInMilliseconds={playTime} />
         </main>
     )
 }
