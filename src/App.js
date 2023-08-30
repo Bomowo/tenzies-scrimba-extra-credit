@@ -7,6 +7,7 @@ export default function App() {
 
     const [dice, setDice] = React.useState(allNewDice())
     const [tenzies, setTenzies] = React.useState(false)
+    const [numOfPlayes, setNumOfPlayes] = React.useState(0);
     
     React.useEffect(() => {
         const allHeld = dice.every(die => die.isHeld)
@@ -40,9 +41,11 @@ export default function App() {
                     die :
                     generateNewDie()
             }))
+            setNumOfPlayes(prevNum => prevNum + 1)
         } else {
             setTenzies(false)
             setDice(allNewDice())
+            setNumOfPlayes(0)
         }
     }
     
@@ -78,6 +81,7 @@ export default function App() {
             >
                 {tenzies ? "New Game" : "Roll"}
             </button>
+            <p>Number of playes: {numOfPlayes}</p>
         </main>
     )
 }
