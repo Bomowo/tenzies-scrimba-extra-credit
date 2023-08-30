@@ -16,7 +16,7 @@ main {
     max-width: 800px;
     border-radius: 5px;
     padding: 20px;
-    margin: 0 auto;
+    margin: 13% auto;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
