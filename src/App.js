@@ -26,7 +26,7 @@ export default function App() {
         let intervalId
 
         if(!tenzies){
-            intervalId = setInterval(() => setPlayTime(playTime + 1), 1000)
+            intervalId = setInterval(() => setPlayTime(playTime + 1), 10)
         }
 
         return () => clearInterval(intervalId)
