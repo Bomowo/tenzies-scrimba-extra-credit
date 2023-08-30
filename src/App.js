@@ -118,8 +118,14 @@ export default function App() {
             >
                 {tenzies ? "New Game" : "Roll"}
             </button>
-            <p>Number of moves: {numOfMoves} <span>Least moves: {bestScore.bestMoves}</span></p>
-            <div className="time"><Timer timeInMilliseconds={playTime} />{isNaN(bestScore.bestTime)?'First Game': <Timer timeInMilliseconds={bestScore.bestTime}/>}</div>
+            <div className="moves">
+                <p className="moves-text">Number of moves: {numOfMoves}</p>
+                <p className="moves-text">{isNaN(bestScore.bestTime)?"First Game":'Least moves:'+bestScore.bestMoves}</p>
+            </div>
+            <div className="time">
+                <Timer timeInMilliseconds={playTime} />
+                {isNaN(bestScore.bestTime)?<p className="stopwatch-time">First Game</p>: <Timer timeInMilliseconds={bestScore.bestTime} best={true}/>}
+            </div>
         </main>
     )
 }

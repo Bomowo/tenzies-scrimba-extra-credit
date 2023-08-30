@@ -12,7 +12,7 @@ export default function Timer (props) {
     // Milliseconds calculation
     const milliseconds = time % 100;
 
-    return (<p className="stopwatch-time">Time- 
+    return (<p className="stopwatch-time">{props.best?'Best Time-':'Time-'} 
     {minutes.toString().padStart(2, "0")}:
     {seconds.toString().padStart(2, "0")}:
     {milliseconds.toString().padStart(2, "0")}
