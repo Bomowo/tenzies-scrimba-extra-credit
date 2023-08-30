@@ -8,19 +8,37 @@ export default function App() {
 
     const [dice, setDice] = React.useState(allNewDice())
     const [tenzies, setTenzies] = React.useState(true)
-    const [numOfPlayes, setNumOfPlayes] = React.useState(0);
+    const [numOfMoves, setNumOfMoves] = React.useState(0);
     const [playTime, setPlayTime] = React.useState(0)
     const [confettiToggle, setConfettiToggle] = React.useState(false)
+    const [bestScore, setBestScore] = React.useState(JSON.parse(localStorage.getItem('best')) || {bestMoves: 'First Game', bestTime: 'First Game'})
     
     React.useEffect(() => {
         const allHeld = dice.every(die => die.isHeld)
         const firstValue = dice[0].value
         const allSameValue = dice.every(die => die.value === firstValue)
+
         if (allHeld && allSameValue) {
+            if((numOfMoves < bestScore.bestMoves) || bestScore.bestMoves === 'First Game') {
+                setBestScore(prevScore => { return {
+                    ...prevScore,
+                    bestMoves: numOfMoves
+                }})
+            }
+            if((playTime<bestScore.bestTime) || bestScore.bestTime === 'First Game') {
+                setBestScore(prevScore => {return {
+                    ...prevScore,
+                    bestTime: playTime
+                }})
+            }
+            localStorage.setItem("best", JSON.stringify(bestScore));
             setTenzies(true)
             setConfettiToggle(true)
+
         }
-    }, [dice])
+    }, [dice, bestScore])
+
+
 
     React.useEffect(() => {
         let intervalId
@@ -56,13 +74,14 @@ export default function App() {
                     die :
                     generateNewDie()
             }))
-            setNumOfPlayes(prevNum => prevNum + 1)
+            setNumOfMoves(prevNum => prevNum + 1)
         } else {
             setTenzies(false)
             setConfettiToggle(false)
             setDice(allNewDice())
-            setNumOfPlayes(0)
+            setNumOfMoves(0)
             setPlayTime(0)
+            localStorage.setItem("best", JSON.stringify(bestScore));
         }
     }
     
@@ -98,8 +117,8 @@ export default function App() {
             >
                 {tenzies ? "New Game" : "Roll"}
             </button>
-            <p>Number of playes: {numOfPlayes}</p>
-            <Timer timeInMilliseconds={playTime} />
+            <p>Number of moves: {numOfMoves} <span>Least moves: {bestScore.bestMoves}</span></p>
+            <div className="time"><Timer timeInMilliseconds={playTime} />{isNaN(bestScore.bestTime)?'First Game': <Timer timeInMilliseconds={bestScore.bestTime}/>}</div>
         </main>
     )
 }
